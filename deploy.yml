@@ -1,0 +1,22 @@
+# deploy.yml
+
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Bootstrap Python
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+    - name: Copy Voting App code
+      copy:
+        src: /C:/Users/lisal/voting-app
+        dest: /opt/voting-app
+
+    - name: Install dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - dependency1
+        - dependency2
